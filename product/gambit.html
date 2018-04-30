@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Yard</title>
+
+    <link rel="icon" href="https://cdn0.iconfinder.com/data/icons/e-commerce-and-shopping-2/512/keyboard_device_computer_modern_web_typing_keys_usability_tool_equipment_computing_flat_design_icon-512.png">
+	<link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/product.css">
+
+</head>
+    
+	<!-- Header -->
+	<div id="container_main" class="wrapper">
+		<div id="header">
+			<ul id="primary_menu">
+				<li><span class="nav_title"><a href="../home.html">HOME</a></span></li>
+				<li><span class="nav_title"><a href="../about.html">ABOUT</a></span></li>
+			</ul>
+
+			<div id="home">
+					<p id="scrap" class="logo"><a href="../home.html"><span>SCRAP</span></a></p>
+					<p id="yard" class="logo"><a href="../home.html"><span>YARD</span></a></p>
+			</div>
+		</div>
+
+        <div class="product">
+            <div class="productimg">
+                <img src="../img/keyboard_3.jpg">
+            </div>
+            <div class="a">
+                <p class="product_name">[G]ambit</p>
+                <p class="product_category">Hero</p>
+                <p class="product_price">$99.99</p>
+                <p id="product_quote" class="product_specs">"Playin' for keeps is still playin', mon ami, so take a card...ANY CARD!"</p>
+                <p id="product_color" class="product_specs"><span class="category_title">Color:</span> Purple Haze, Steel Grey, Faded Blue</p>
+                <p id="product_connection" class="product_specs"><span class="category_title">Connection:</span> Wireless</p>
+                <p id="product_dimensions" class="product_specs"><span class="category_title">Dimension:</span> 316mm x 118mm x 39mm</p>
+                <p id="product_weight" class="product_specs"><span class="category_title">Weight:</span> 11.4 oz</p>
+                <p id="product_description" class="product_specs">Magic Mike's Alter Ego</p>
+
+                <button onclick="togglePayment()" id="buybtn">Buy</button>
+
+            </div>
+        </div>
+	</div>
+    
+    <div class="wrapper" id="buy">
+        <div class="col-75">
+            <div class="container">
+                <!-- After completing the form, launch email client to with Subject, Body, and Email filled out -->
+                <form action="mailto:someone@example.com?Subject=Order%20Confirmation" method="post" enctype="text/plain" id="payment_form">
+
+                    <div class="row">
+                        <div class="col-50">
+                            <h3>Billing Address</h3>
+                            <input type="text" id="fname" name="firstname" placeholder="Full Name" required pattern="[a-zA-Z ]*$">
+                            <input type="text" id="email" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" onchange="updateEmail()">
+                            <input type="text" id="phone" name="phone" placeholder="Phone Number" required pattern="[0-9]{10}" minlength="10" maxlength="10">
+                            <input type="text" id="adr" name="address" placeholder="Street Address" required>
+                            <input type="text" id="city" name="city" placeholder="City" required pattern="[a-zA-z ]*$">
+
+                            <div class="row">
+                                <div class="col-50">
+                                    <input type="text" id="state" name="state" placeholder="State" required pattern="[a-zA-Z]{2}" minlength="2" maxlength="2">
+                                </div>
+                                <div class="col-50">
+                                    <input type="text" id="zip" name="zip" placeholder="Zip" required pattern="[0-9]{5}" minlength-"5" maxlength="5">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-50">
+                            <h3>Payment</h3>
+                            <input type="text" id="cname" name="cardname" placeholder="Cardholder Name" required pattern="[a-zA-Z ]*$">
+                            <input type="text" id="ccnum" name="cardnumber" placeholder="Card Number" required pattern="[0-9]{16}" minlength="16" maxlength="16">
+                            <input type="text" id="expmonth" name="expmonth" placeholder="EXP Month" required pattern="[0-9]{1,2}" minlength="1" maxlength="2">
+
+                            <div class="row">
+                                <div class="col-50">
+                                    <input type="text" id="expyear" name="expyear" placeholder="EXP Year" required pattern="[0-9]{4}" minlength="4" maxlength="4">
+                                </div>
+                                <div class="col-50">
+                                    <input type="text" id="cvv" name="cvv" placeholder="CVV" required pattern="[0-9]{3}" minlength="3" maxlength="3">
+                                </div>
+                            </div>
+                            <input type="text" id="quantity" name="quantity" placeholder="Quantity" required pattern="[0-9]{1,2}" minlength="1" maxlength="2">
+                        </div>
+                    </div>
+                        
+                    <h3>Shipping</h3>
+                    <input type="radio" id="shipping" name="shipping" required><b>Standard Shipping</b>
+                    <p style="color: rgb(128, 128, 128, 0.8); margin: 0; padding: 0 0 0.5em 1.2em;">5 - 7 Business Days | Free</p>
+                    <input type="radio" id="shipping" name="shipping"><b>Express Shipping</b>
+                    <p style="color: rgb(128, 128, 128, 0.8); margin: 0; padding: 0 0 0.5em 1.2em;">2 - 3 Business Days | + $10.00</p>
+
+                    <label>
+                      <input type="checkbox" id="address_check" checked="checked" name="sameadr" onchange="toggleShipping()"> Shipping address same as billing
+                    </label>
+
+                    <div class="row" id="shipping_information">
+                        <div class="col-50">
+                            <h3>Shipping Address</h3>
+                            <input type="text" id="fname_ship" name="firstname" placeholder="Full Name" pattern="[a-zA-Z ]*$">
+                            <input type="text" id="adr_ship" name="address" placeholder="Street Address" >
+                            <input type="text" id="city_ship" name="city" placeholder="City" pattern="[a-zA-z ]*$">
+
+                            <div class="row">
+                                <div class="col-50">
+                                    <input type="text" id="state_ship" name="state" placeholder="State" pattern="[a-zA-Z]{2}" minlength="2" maxlength="2">
+                                </div>
+                                <div class="col-50">
+                                    <input type="text" id="zip_ship" name="zip" placeholder="Zip" pattern="[0-9]{5}" minlength-"5" maxlength="5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Continue to checkout" class="btn">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // When Shipping Address is different from Billing Address Display SHIPPING_INFORMATION div
+        function toggleShipping(){
+            var x = document.getElementById("address_check");
+            var y = document.getElementById("shipping_information");
+            if(x.checked === true){
+                y.style.display = "none";
+                document.getElementById("fname_ship").value = "";
+                document.getElementById("adr_ship").value = "";
+                document.getElementById("city_ship").value = "";
+                document.getElementById("state_ship").value = "";
+                document.getElementById("zip_ship").value = "";
+            } else {
+                y.style.display = "block";
+            }
+        }
+
+
+        // When the BUY button is pressed, display BUY div
+        function togglePayment() {
+            var x = document.getElementById("buy");
+            if (x.style.display && x.style.display !== "none") {
+                x.style.display = "none";
+                document.getElementById("buybtn").innerHTML = "Buy"
+            } else {
+                document.getElementById("buybtn").innerHTML = "Cancel"
+                x.style.display = "block";
+                window.scrollBy(0, 500);
+            }
+        }
+       
+        // When user inputs email, update <form>
+        function updateEmail(){
+            document.getElementById("payment_form").action = "mailto:" + document.getElementById("email").value + "?Subject=Order%20Confirmation";
+        } 
+    </script>
+
+</html>
