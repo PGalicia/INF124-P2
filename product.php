@@ -1,53 +1,57 @@
+<!-- Connect to Database -->
+<?php include 'php_include/connect.php';?>
+
+<?php
+
+	// Access the chosen productid
+	$id = $_GET["id"];
+	
+	// Access all items in PRODUCT_INFO
+    $sql = "SELECT * FROM product_info where id = '" . $id . "'";
+	$stmt = $conn->query($sql);
+	$row = $stmt->fetchObject();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>The Yard</title>
 
     <link rel="icon" href="https://cdn0.iconfinder.com/data/icons/e-commerce-and-shopping-2/512/keyboard_device_computer_modern_web_typing_keys_usability_tool_equipment_computing_flat_design_icon-512.png">
-	<link rel="stylesheet" href="../css/home.css">
-    <link rel="stylesheet" href="../css/product.css">
-
+	<link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/product.css">
 </head>
-    
-	<!-- Header -->
-	<div id="container_main" class="wrapper">
-		<div id="header">
-			<ul id="primary_menu">
-				<li><span class="nav_title"><a href="../home.html">HOME</a></span></li>
-				<li><span class="nav_title"><a href="../about.html">ABOUT</a></span></li>
-			</ul>
+<body>
 
-			<div id="home">
-					<p id="scrap" class="logo"><a href="../home.html"><span>SCRAP</span></a></p>
-					<p id="yard" class="logo"><a href="../home.html"><span>YARD</span></a></p>
-			</div>
-		</div>
+	<!-- Navigation -->
+	<?php include 'php_include/navigation.php';?>
 
-        <div class="product">
-            <div class="productimg">
-                <img src="../img/keyboard_7.jpg">
-            </div>
-            <div class="a">
-                <p class="product_name">[C]aptain [C]old</p>
-                <p class="product_category">Villain</p>
-                <p class="product_price">$199.99</p>
-                <p id="product_quote" class="product_specs">"Somebody call the ice cream man?"</p>
-                <p id="product_color" class="product_specs"><span class="category_title">Color:</span> Arctic White, Icey Blue</p>
-                <p id="product_connection" class="product_specs"><span class="category_title">Connection:</span> Wireless</p>
-                <p id="product_dimensions" class="product_specs"><span class="category_title">Dimension:</span> 278mm x 155mm x 43mm</p>
-                <p id="product_weight" class="product_specs"><span class="category_title">Weight:</span> 12.5 oz</p>
-                <p id="product_description" class="product_specs">Master tactician and thief, with the bonus of having a really "cool" gun</p>
+	<!-- Product Information -->
+	<div id="container_product_info" class="wrapper">
+	    <div class="product">
+	        <div class="productimg">
+	            <?php echo "<img src='img/keyboard_" . $row->id . ".jpg'>";?>
+	        </div>
+	        <div class="a">
+	            <p class="product_name"><?php echo $row->name;?></p>
+	            <p class="product_category"><?php echo $row->category;?></p>
+	            <p class="product_price"><?php echo "$" . $row->price;?></p>
+	            <p id="product_quote" class="product_specs"><?php echo "\"" . $row->quote . "\"";?></p>
+	            <p id="product_color" class="product_specs"><span class="category_title">Color:</span> <?php echo $row->color;?></p>
+	            <p id="product_connection" class="product_specs"><span class="category_title">Connection:</span> <?php echo $row->connection;?></p>
+	            <p id="product_dimensions" class="product_specs"><span class="category_title">Dimension:</span> <?php echo $row->dimension;?></p>
+	            <p id="product_weight" class="product_specs"><span class="category_title">Weight:</span> <?php echo $row->weight . " oz";?></p>
+	            <p id="product_description" class="product_specs"><?php echo $row->description;?></p>
 
-                <button onclick="togglePayment()" id="buybtn">Buy</button>
+	            <button onclick="togglePayment()" id="buybtn">Buy</button>
+	        </div>
+    	</div>
+    </div>
 
-            </div>
-        </div>
-	</div>
-    
     <div class="wrapper" id="buy">
         <div class="col-75">
             <div class="container">
-                <!-- After completing the form, launch email client to with Subject, Body, and Email filled out -->
+            <!-- After completing the form, launch email client to with Subject, Body, and Email filled out -->
                 <form action="mailto:someone@example.com?Subject=Order%20Confirmation" method="post" enctype="text/plain" id="payment_form">
 
                     <div class="row">
@@ -84,14 +88,21 @@
                                 </div>
                             </div>
                             <input type="text" id="quantity" name="quantity" placeholder="Quantity" required pattern="[0-9]{1,2}" minlength="1" maxlength="2">
+                            <h3 style="padding: 0.6em 0 0 0.3em; margin: 0;">Total Price: $ <span id="total_price"><?php echo $row->price;?></span></h3>
                         </div>
                     </div>
                         
-                    <h3>Shipping</h3>
-                    <input type="radio" id="shipping" name="shipping" required><b>Standard Shipping</b>
-                    <p style="color: rgb(128, 128, 128, 0.8); margin: 0; padding: 0 0 0.5em 1.2em;">5 - 7 Business Days | Free</p>
-                    <input type="radio" id="shipping" name="shipping"><b>Express Shipping</b>
-                    <p style="color: rgb(128, 128, 128, 0.8); margin: 0; padding: 0 0 0.5em 1.2em;">2 - 3 Business Days | + $10.00</p>
+                    <h3 style="margin-bottom: 0.5em;">Shipping</h3>
+                    <!-- Estimated Shipping will show after a user pick the type of shipping -->
+                    <p style="color: rgb(128, 128, 128); margin: 0; padding: 0 0 0.5em 0;">Estimated Arrival Date: <span id="shipping_date">Unknown</span></p>
+                    <input type="radio" id="shipping" name="shipping" required onclick="estimateDate('free'); changeRate('free');"><b>FREE Shipping</b>
+                    <p style="color: rgb(128, 128, 128, 0.8); margin: 0; padding: 0 0 0.5em 1.2em;">8 - 15 Days | Free</p>
+                    <input type="radio" id="shipping" name="shipping" onclick="estimateDate('standard'); changeRate('standard');"><b>Standard Shipping</b>
+                    <p style="color: rgb(128, 128, 128, 0.8); margin: 0; padding: 0 0 0.5em 1.2em;">5 - 7 Days | + $5.00</p>
+                    <input type="radio" id="shipping" name="shipping" onclick="estimateDate('express'); changeRate('express');"><b>Express Shipping</b>
+                    <p style="color: rgb(128, 128, 128, 0.8); margin: 0; padding: 0 0 0.5em 1.2em;">2 - 3 Days | + $10.00</p>
+                    <input type="radio" id="shipping" name="shipping" onclick="estimateDate('overnight'); changeRate('overnight');"><b>Overnight Shipping</b>
+                    <p style="color: rgb(128, 128, 128, 0.8); margin: 0; padding: 0 0 0.5em 1.2em;">1 Day | + $20.00</p>
 
                     <label>
                       <input type="checkbox" id="address_check" checked="checked" name="sameadr" onchange="toggleShipping()"> Shipping address same as billing
@@ -122,6 +133,33 @@
     </div>
 
     <script>
+    	// Print the total price(including shipping rate) of the item
+    	function changeRate(shipping_type){
+    		var xmlhttp = new XMLHttpRequest();
+        	xmlhttp.onreadystatechange = function() {
+            	if (this.readyState == 4 && this.status == 200) {
+                	document.getElementById("total_price").innerHTML = this.responseText;
+            	}
+        	};
+        	xmlhttp.open("GET", "php_include/price.php?shipping_type=" + shipping_type + "&product_price=" + <?php echo $row->price;?>, true);
+        	xmlhttp.send();
+
+    	}
+
+    	// Print the arrival date based on the shipping
+    	function estimateDate(shipping_type){
+    		var xmlhttp = new XMLHttpRequest();
+        	xmlhttp.onreadystatechange = function() {
+            	if (this.readyState == 4 && this.status == 200) {
+                	document.getElementById("shipping_date").innerHTML = this.responseText;
+            	}
+        	};
+        	xmlhttp.open("GET", "php_include/shipping.php?shipping_type=" + shipping_type, true);
+        	xmlhttp.send();
+
+    	}
+
+
         // When Shipping Address is different from Billing Address Display SHIPPING_INFORMATION div
         function toggleShipping(){
             var x = document.getElementById("address_check");
@@ -158,5 +196,8 @@
         }
             
     </script>
-
+</body>
 </html>
+
+<!-- Close Connection -->
+<?php include 'php_include/disconnect.php';?>

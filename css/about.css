@@ -1,4 +1,4 @@
-#container_main > #about{
+#container_head_text > #about{
 	position: relative;
 	top: 30%;
 	transform: translateY(-50%);

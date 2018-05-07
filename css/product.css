@@ -1,9 +1,15 @@
 /*Product------------------------------------------*/
 
+#container_product_info {
+  display: block;
+  overflow: auto;
+}
+
 div.product{
     padding-top: 3em;
     float: none;
     width: 100%;
+    height: 93%;
     border-style: hidden;
     background-color: aqua;
     background: white;

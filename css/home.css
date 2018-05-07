@@ -1,16 +1,17 @@
 body, html {
-  height: 115%;
+  height: 100%;
   margin: 0 auto;
 }
 
 #container_main{
 	position: relative;
-	height: 100%;
-	max-width: 90%;
-	margin: 0 auto;
-	padding-left: 2.5rem;
-	padding-right: 2.5rem;
+	height: 7.6%;
 	padding-top: 3em;
+}
+
+#container_head_text{
+	position: relative;
+	height: 90%;
 }
 
 .wrapper{	
@@ -101,7 +102,7 @@ body, html {
 
 /*Header Text---------------------------------------*/
 
-#container_main > #header_photo{
+#container_head_text > #header_photo{
 	text-align: center;
 	position: relative;
 	top: 35%;
@@ -109,7 +110,7 @@ body, html {
 }
 
 
-#container_main > #header_photo > .phrase{
+#container_head_text > #header_photo > .phrase{
 	margin: 0 auto;
 	font-family: Verdana;
 	font-weight: bold;
